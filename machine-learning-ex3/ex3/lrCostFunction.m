@@ -36,14 +36,22 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+h_theta_x = sigmoid(X * theta); % m*1 matrix/ m-dimention vector
+% theta: n+1 * 1 matrix
+% X: m * (n+1) matrix
+% y: m * 1 matrix
+theta_zero = theta;
+theta_zero(1) = 0;
+grad = 1/m * ( X' * ( h_theta_x - y) ); % unregularized gradient for logistic regression
+grad_reg_term =  lambda/m * theta_zero;
+grad = grad + grad_reg_term;
 
-
-
-
-
-
-
-
+term_1 = log(h_theta_x)' * y;
+term_2 = log(1 - h_theta_x)' * (1-y);
+theta_n = theta([2:end],:);
+J = - 1/m *  (term_1 + term_2);
+J_reg_term = lambda/(2*m) * theta_n' * theta_n;
+J = J +  J_reg_term; % number
 
 % =============================================================
 
