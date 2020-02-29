@@ -30,11 +30,13 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
+h_theta_x = sigmoid(X * all_theta'); 
+% X:  m * n+1 matrix
+% all_theta:  K * n+1 matrix
+% h_theta_x: m * k matrix
 
-
-
-
-
+[probability, p] = max(h_theta_x, [], 2);
+% p: m * 1 matrix
 
 % =========================================================================
 
