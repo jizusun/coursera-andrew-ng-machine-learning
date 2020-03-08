@@ -39,6 +39,29 @@ Theta2_grad = zeros(size(Theta2));
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
 %
+
+A1 = [ones(m, 1) X]; % 5000 * 401
+% Theta1: 25*401
+Z2 = A1 * Theta1'; % 5000* 25
+A2 = [ones(m,1) sigmoid(Z2)]; % 5000 * 26 
+
+Z3 = A2 * Theta2'; % Theta2: 10*26
+H_theta = sigmoid(Z3); %  5000 * 10
+
+
+Y = zeros(m, num_labels);   %  5000 * 10
+for(i=1:m)
+    Y(i, y(i)) = 1;
+end
+
+Theta1_new = Theta1(:, 2:end);
+Theta2_new = Theta2(:, 2:end);
+
+reg_term = lambda / (2 * m) * ( sum(sum(Theta1_new .^ 2))  + sum(sum(Theta2_new .^ 2)) );
+
+J = -1/m * sum(sum( Y .* log(H_theta) + (1-Y) .* log(1 - H_theta) )) + reg_term;
+
+
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
 %         the cost function with respect to Theta1 and Theta2 in Theta1_grad and
@@ -54,6 +77,30 @@ Theta2_grad = zeros(size(Theta2));
 %               over the training examples if you are implementing it for the 
 %               first time.
 %
+
+for t=1:m
+    %  Step 1: forward propagation
+
+    a3 = H_theta(t,:); % 1*10
+    delta3 = a3 - Y(t,:); % 1*10
+    delta3 = delta3'; % 10*1
+
+    z2 = [1 Z2(t,:)]'; % 26 * 1    
+    delta2 = (Theta2' * delta3) .* sigmoidGradient(z2);
+    a2 = A2(t,:); % 1 * 26
+    a1 = A1(t,:); % 1 * 401
+    
+    % Step 
+    delta2 = delta2(2:end);
+    Theta2_grad = Theta2_grad + delta3 * a2; % Theta2: 10*26
+    Theta1_grad = Theta1_grad + delta2 * a1; %  25*401
+
+end; 
+
+% Step 5: 
+Theta1_grad = 1/m * Theta1_grad;
+Theta2_grad = 1/m * Theta2_grad;
+
 % Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for
@@ -63,20 +110,8 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + ((lambda/m) * Theta1(:, 2:end)); % for j >= 1 
+Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + ((lambda/m) * Theta2(:, 2:end)); % for j >= 1
 
 
 
