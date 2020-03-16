@@ -20,13 +20,28 @@ grad = zeros(size(theta));
 %
 
 h_theta = X * theta;
-term1 = (h_theta - y)' * (h_theta - y);
-term2 = (theta(2:end))' * theta(2:end);
+delta = h_theta - y; % m * 1
+term1 = delta' * delta;
+
+theta_for_reg = theta(2:end);
+term2 = theta_for_reg' * theta_for_reg;
+
 J = 1/(2*m) * term1 + lambda/(2*m) * term2;
 
-% h_theta = X * theta;
-% J = 1/(2*m) * (h_theta - y)' * (h_theta - y) + ...
-%     (lambda/(2*m)) * (theta(2:length(theta)))' * theta(2:length(theta));
+theta_for_grad = theta;
+theta_for_grad(1,:) = 0; % set the first row as 0
+grad = 1/m * ( delta' * X )  +  lambda / m * theta_for_grad';
+
+
+% https://github.com/atinesh-s/Coursera-Machine-Learning-Stanford/blob/master/Week%206/Programming%20Assignment/machine-learning-ex5/ex5/linearRegCostFunction.m
+% thetaZero = theta;
+% thetaZero(1) = 0;
+% grad = ((1 / m) * delta' * X) + lambda / m * thetaZero';
+
+% https://github.com/AvaisP/machine-learning-programming-assignments-coursera-andrew-ng/blob/master/machine-learning-ex5/ex5/linearRegCostFunction.m
+% tempTheta = theta;
+% tempTheta(1) = 0;
+% grad = (1 / m) * (X' * delta) + (lambda/m)*tempTheta;
 
 % =========================================================================
 
