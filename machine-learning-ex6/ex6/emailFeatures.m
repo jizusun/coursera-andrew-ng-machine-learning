@@ -48,11 +48,8 @@ x = zeros(n, 1);
 %
 %
 
-
-
-
-
-
+% https://github.com/atinesh-s/Coursera-Machine-Learning-Stanford/blob/master/Week%207/Programming%20Assignment/machine-learning-ex6/ex6/emailFeatures.m
+x(word_indices) = 1;
 
 
 % =========================================================================
