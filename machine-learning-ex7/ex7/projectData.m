@@ -18,7 +18,12 @@ Z = zeros(size(X, 1), K);
 %                    projection_k = x' * U(:, k);
 %
 
+% https://github.com/AvaisP/machine-learning-programming-assignments-coursera-andrew-ng/blob/45268fc67ee60f65c2e07dbc7a2ef7c45f0d4ecf/machine-learning-ex7/ex7/projectData.m#L21-L24
 
+for i = 1:size(X, 1)
+    x = X(i, :)';
+    Z(i, :) = x' * U(:, 1:K);
+end
 
 
 % =============================================================

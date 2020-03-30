@@ -27,10 +27,10 @@ centroids = zeros(K, n);
 %
 
 
-
-
-
-
+% https://github.com/atinesh-s/Coursera-Machine-Learning-Stanford/blob/4fb6c45fbcada844f8c258241dc4dec794a373ef/Week%208/Programming%20Assignment/machine-learning-ex7/ex7/computeCentroids.m#L29-L31
+for k=1:K % for-loop over the centroids 
+   centroids(k, :) = mean(X(idx==k, :));
+end
 
 
 % =============================================================

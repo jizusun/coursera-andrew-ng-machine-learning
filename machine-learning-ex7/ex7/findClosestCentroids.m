@@ -21,11 +21,17 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
-
-
-
-
-
+% https://github.com/AvaisP/machine-learning-programming-assignments-coursera-andrew-ng/blob/45268fc67ee60f65c2e07dbc7a2ef7c45f0d4ecf/machine-learning-ex7/ex7/findClosestCentroids.m#L23-L32
+for i = 1:size(X,1)
+	min = Inf;
+	for j = 1:K
+		distance = sum((X(i,:) - centroids(j,:)).^2);
+		if min > distance
+			min = distance;
+			idx(i) = j;
+		end
+	end
+end	
 
 % =============================================================
 
