@@ -40,20 +40,16 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+% https://github.com/atinesh-s/Coursera-Machine-Learning-Stanford/blob/4fb6c45fbcada844f8c258241dc4dec794a373ef/Week%209/Programming%20Assignment/machine-learning-ex8/ex8/cofiCostFunc.m#L43-L50
 
+M = (X*Theta' - Y).^2;
+J = 1/2 * sum(sum(R.*M));
+X_grad = (R .* (X*Theta' - Y)) * Theta;
+Theta_grad = (R .* (X*Theta' - Y))' * X;
 
-
-
-
-
-
-
-
-
-
-
-
-
+J = J + lambda/2 * (sum(sum(Theta.^2)) + sum(sum(X.^2)));
+X_grad = X_grad + lambda * X;
+Theta_grad = Theta_grad + lambda * Theta;
 
 % =============================================================
 
